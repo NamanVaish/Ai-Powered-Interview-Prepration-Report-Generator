@@ -1,5 +1,7 @@
 const express = require("express");
-const authRouter = require("../src/routes/auth.routes.js");
+const authRouter = require("./routes/auth.routes.js");
+const interviewRouter = require("./routes/interview.routes.js");
+
 const cors = require("cors");
 
 const app = express();
@@ -15,5 +17,6 @@ app.use(
 );
 
 app.use("/api/auth", authRouter);
+app.use("/api/interview", interviewRouter);
 
 module.exports = app;
