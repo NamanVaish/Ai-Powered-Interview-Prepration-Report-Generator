@@ -37,7 +37,7 @@ const interviewReportSchema = {
                 required: ["question", "intention", "answer"]
             }
         },
-        skillGaps: {
+        skillGap: {
             type: Type.ARRAY,
             description: "List of missing skills",
             items: {
@@ -71,7 +71,7 @@ const interviewReportSchema = {
             description: "The title of the job for which the interview report is generated"
         }
     },
-    required: ["matchScore", "technicalQuestions", "behavioralQuestions", "skillGaps", "preparationPlan", "title"]
+    required: ["matchScore", "technicalQuestions", "behavioralQuestions", "skillGap", "preparationPlan", "title"]
 };
 
 async function generateInterviewReport({ resume, selfDescription, jobDescription }) {
@@ -90,7 +90,7 @@ Job Description: ${jobDescription}`;
             }
         });
 
-        const report = JSON.parse(JSON.stringify(response.text));
+        const report = JSON.parse(response.text);
         return report;
     } catch (error) {
         console.error("Error generating interview report:", error);

@@ -5,7 +5,6 @@ import { AuthProvider } from "./features/auth/auth.context.jsx";
 import { router } from "./app.routes";
 
 import "./index.css";
-import "./style.scss";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
