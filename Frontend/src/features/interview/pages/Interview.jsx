@@ -84,7 +84,44 @@ export default function Interview() {
         </div>
     );
 
-    const { report } = useInterview();
+    const { report, loading } = useInterview();
+if (loading || !report) {
+        return (
+            <div className="fixed inset-0 flex items-center justify-center bg-slate-100 overflow-hidden px-4">
+                <div className="absolute w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl -top-24 -left-20 animate-pulse"></div>
+
+                <div className="absolute w-[28rem] h-[28rem] bg-blue-400/20 rounded-full blur-3xl -bottom-24 -right-20 animate-pulse"></div>
+
+                <div className="relative flex flex-col items-center gap-6 sm:gap-8 bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl px-8 sm:px-14 py-10 sm:py-12 border border-white w-full max-w-sm sm:w-auto">
+                    <div className="relative w-20 h-20 sm:w-28 sm:h-28">
+                        <div className="absolute inset-0 rounded-full border-[6px] border-indigo-200"></div>
+
+                        <div className="absolute inset-0 rounded-full border-[6px] border-transparent border-t-indigo-600 border-r-blue-500 animate-spin"></div>
+
+                        <div className="absolute inset-3 rounded-full border-[5px] border-transparent border-b-indigo-500 border-l-blue-400 animate-spin [animation-direction:reverse] [animation-duration:1.2s]"></div>
+
+                        <div className="absolute inset-8 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full animate-pulse"></div>
+                    </div>
+
+                    <div className="text-center">
+                        <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
+                            Signing You In
+                        </h2>
+
+                        <p className="text-slate-500 text-base sm:text-lg mt-2">
+                            Please wait while we verify your credentials...
+                        </p>
+                    </div>
+
+                    <div className="flex gap-2">
+                        <span className="w-3 h-3 rounded-full bg-indigo-500 animate-bounce"></span>
+                        <span className="w-3 h-3 rounded-full bg-indigo-500 animate-bounce delay-150"></span>
+                        <span className="w-3 h-3 rounded-full bg-blue-500 animate-bounce delay-300"></span>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen w-full bg-slate-100 relative overflow-hidden py-10 px-4">
