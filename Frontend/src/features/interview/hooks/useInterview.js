@@ -29,10 +29,11 @@ export const useInterview = () => {
                 resumeFile
             });
             setReport(response.interviewReport);
+            return response.interviewReport;
         } catch (err) {
             console.log(err);
         } finally {
-            setLoding(false);
+            setLoading(false);
         }
     };
 
@@ -44,7 +45,7 @@ export const useInterview = () => {
         } catch (err) {
             console.log(err);
         } finally {
-            setLoding(false);
+            setLoading(false);
         }
     };
 
@@ -56,7 +57,7 @@ export const useInterview = () => {
         } catch (err) {
             console.log(err);
         } finally {
-            setLoding(false);
+            setLoading(false);
         }
     };
 

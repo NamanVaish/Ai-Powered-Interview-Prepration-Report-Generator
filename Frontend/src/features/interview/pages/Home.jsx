@@ -12,8 +12,9 @@ const navigate = useNavigate()
 
 const handleGenerateReport = async () => {
 const resumeFile = resumeInputRef.current.files[0]
-const data = await generateReport({jobDescription,selfDescription,resumeFile})
-navigate(`/interview:${data._id}`)
+const report = await generateReport({jobDescription,selfDescription,resumeFile})
+console.log(report)
+navigate(`/interview:${report._id}`)
 }
 
 if (loading) {
