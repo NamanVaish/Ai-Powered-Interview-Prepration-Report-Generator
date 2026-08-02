@@ -57,7 +57,9 @@ export default function Register() {
         <div className="min-h-screen md:h-screen w-full flex items-center justify-center bg-slate-100 px-4 py-6 sm:py-8 md:py-10">
             <div className="relative w-full max-w-sm sm:max-w-2xl md:w-[80%] md:max-w-none min-h-0 md:h-[80%] bg-white rounded-[20px] sm:rounded-[24px] md:rounded-[30px] shadow-[0_5px_15px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col md:flex-row">
                 <div className="w-full md:w-1/2 bg-gradient-to-r from-indigo-500 to-blue-500 text-white flex flex-col items-center justify-center text-center py-10 sm:py-12 md:py-0 order-1 rounded-b-[40px] sm:rounded-b-[50px] md:rounded-b-none md:rounded-tr-[200px] md:rounded-br-[200px] gap-4 sm:gap-5 md:gap-6 px-6 sm:px-8 md:px-0">
-                    <h1 className="text-5xl sm:text-6xl md:text-8xl font-bold mb-3">Welcome Back!</h1>
+                    <h1 className="text-5xl sm:text-6xl md:text-8xl font-bold mb-3">
+                        Welcome Back!
+                    </h1>
                     <p className="text-lg sm:text-xl md:text-3xl font-semibold text-indigo-100 mb-6 leading-relaxed">
                         Sign in to keep building your resume <br />
                         where you left off.
@@ -111,8 +113,7 @@ export default function Register() {
                             className="rounded-[15px] border border-indigo-500 bg-indigo-500 text-center text-white text-lg sm:text-xl md:text-2xl font-semibold tracking-wider hover:bg-indigo-600 active:scale-95 w-full sm:w-1/2 md:w-1/3 h-12 "
                         >
                             Sign Up
-              
-          </button>
+                        </button>
                     </form>
                 </div>
             </div>

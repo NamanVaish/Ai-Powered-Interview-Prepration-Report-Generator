@@ -3,26 +3,31 @@ const generateInterviewReport = require("../services/ai.service.js");
 const interviewReportModel = require("../models/interviewReport.model.js");
 
 const generateInterviewReportController = async (req, res) => {
-    if (!req.file) {
+    const { selfDescription, jobDescription } = req.body;
+    if (!req.file && !selfDescription?.trim()) {
         return res.status(400).json({
-            message: "Resume PDF is required"
+            message: "Either Resume or Self Description is required"
         });
     }
 
-    const parser = new pdfParse.PDFParse(Uint8Array.from(req.file.buffer));
+    let resumeText = "";
 
-    const resumeContent = await parser.getText();
-    const { selfDescription, jobDescription } = req.body;
+    if (req.file) {
+        const parser = new pdfParse.PDFParse(Uint8Array.from(req.file.buffer));
+
+        const resumeContent = await parser.getText();
+        resumeText = resumeContent.text;
+    }
 
     const interviewReportByAi = await generateInterviewReport({
-        resume: resumeContent.text,
+        resume: resumeText,
         selfDescription,
         jobDescription
     });
 
     const interviewReport = await interviewReportModel.create({
         user: req.user.id,
-        resume: resumeContent.text,
+        resume: resumeText,
         selfDescription,
         jobDescription,
         ...interviewReportByAi
@@ -56,7 +61,7 @@ const getInterviewReportByIdController = async (req, res) => {
 
 const getAllInterviewReports = async (req, res) => {
     const interviewReports = await interviewReportModel
-        .findOne({
+        .find({
             user: req.user.id
         })
         .sort({ createdAt: -1 })

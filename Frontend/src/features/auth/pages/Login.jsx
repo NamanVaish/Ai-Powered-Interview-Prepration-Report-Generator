@@ -93,7 +93,9 @@ export default function Login() {
                 </div>
 
                 <div className="w-full sm:w-1/2 bg-gradient-to-r from-indigo-500 to-blue-500 text-white flex flex-col items-center justify-center text-center py-10 sm:py-0 order-1 rounded-b-[40px] sm:rounded-b-none sm:rounded-tl-[200px] sm:rounded-bl-[200px] gap-4 sm:gap-6 px-6 sm:px-0">
-                    <h1 className="text-5xl sm:text-8xl font-bold mb-3">Hello, Friend!</h1>
+                    <h1 className="text-5xl sm:text-8xl font-bold mb-3">
+                        Hello, Friend!
+                    </h1>
                     <p className="text-lg sm:text-3xl font-semibold text-indigo-100 mb-6 leading-relaxed">
                         Create an account and let AI help you <br />
                         craft a standout resume.
@@ -103,8 +105,7 @@ export default function Login() {
                         onClick={() => navigate("/register")}
                         className=" w-1/2 sm:w-1/5 py-2 rounded-lg border border-white bg-transparent text-white text-lg sm:text-2xl  tracking-wider hover:bg-white active:scale-95"
                     >
-                      
-  Sign Up
+                        Sign Up
                     </button>
                 </div>
             </div>

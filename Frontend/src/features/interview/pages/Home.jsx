@@ -1,36 +1,44 @@
-import { useState,useRef } from "react";
-import {useInterview} from "../hooks/useInterview.js"
-import {useNavigate} from "react-router-dom"
+import { useState, useRef, useEffect } from "react";
+import { useInterview } from "../hooks/useInterview.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+    const { loading, generateReport, reports, getReports } = useInterview();
+    const [jobDescription, setJobDescription] = useState("");
+    const [selfDescription, setSelfDescription] = useState("");
+    const [openReports, setOpenReports] = useState({});
+    const resumeInputRef = useRef();
+    const navigate = useNavigate();
 
-const {loading,generateReport} = useInterview()
-const [jobDescription, setJobDescription] = useState("")
-const [selfDescription, setSelfDescription] = useState("")
-const resumeInputRef = useRef()
-const navigate = useNavigate()
+    useEffect(() => {
+        getReports();
+    }, []);
 
-const handleGenerateReport = async () => {
-const resumeFile = resumeInputRef.current.files[0]
-const report = await generateReport({jobDescription,selfDescription,resumeFile})
-navigate(`/interview/:${report._id}`)
-}
+    const handleGenerateReport = async () => {
+        const resumeFile = resumeInputRef.current.files[0];
+        const report = await generateReport({
+            jobDescription,
+            selfDescription,
+            resumeFile
+        });
+        navigate(`/interview/${report._id}`);
+    };
 
-if (loading) {
+    const toggleReport = key => {
+        setOpenReports(prev => ({ ...prev, [key]: !prev[key] }));
+    };
+
+    if (loading) {
         return (
             <div className="fixed inset-0 flex items-center justify-center bg-slate-100 overflow-hidden px-4">
                 <div className="absolute w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl -top-24 -left-20 animate-pulse"></div>
-
                 <div className="absolute w-[28rem] h-[28rem] bg-blue-400/20 rounded-full blur-3xl -bottom-24 -right-20 animate-pulse"></div>
 
                 <div className="relative flex flex-col items-center gap-6 sm:gap-8 bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl px-8 sm:px-14 py-10 sm:py-12 border border-white w-full max-w-sm sm:w-auto">
                     <div className="relative w-20 h-20 sm:w-28 sm:h-28">
                         <div className="absolute inset-0 rounded-full border-[6px] border-indigo-200"></div>
-
                         <div className="absolute inset-0 rounded-full border-[6px] border-transparent border-t-indigo-600 border-r-blue-500 animate-spin"></div>
-
                         <div className="absolute inset-3 rounded-full border-[5px] border-transparent border-b-indigo-500 border-l-blue-400 animate-spin [animation-direction:reverse] [animation-duration:1.2s]"></div>
-
                         <div className="absolute inset-8 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full animate-pulse"></div>
                     </div>
 
@@ -38,7 +46,6 @@ if (loading) {
                         <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
                             Signing You In
                         </h2>
-
                         <p className="text-slate-500 text-base sm:text-lg mt-2">
                             Please wait while we verify your credentials...
                         </p>
@@ -100,14 +107,15 @@ if (loading) {
                             </span>
                         </div>
 
-                        <textarea onChange={(e) => {setJobDescription(e.target.value)}} 
-                            name="jobDecription"
+                        <textarea
+                            onChange={e => setJobDescription(e.target.value)}
+                            name="jobDescription"
                             placeholder={`Paste the full job description here...\ne.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large-scale system design...'`}
                             maxLength={5000}
                             className="w-full h-64 lg:h-[22rem] bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-slate-700 outline-none focus:ring-2 focus:ring-indigo-300 focus:bg-white transition-all duration-300 resize-none placeholder:text-slate-400"
                         />
                         <span className="text-xs text-slate-400 self-end">
-                            0 / 5000 chars
+                            {jobDescription.length} / 5000 chars
                         </span>
                     </div>
 
@@ -168,7 +176,8 @@ if (loading) {
                                 <span className="text-slate-400 text-xs">
                                     PDF or DOCX (Max 5MB)
                                 </span>
-                                <input ref={resumeInputRef} 
+                                <input
+                                    ref={resumeInputRef}
                                     id="resume-upload"
                                     type="file"
                                     name="resume"
@@ -191,7 +200,10 @@ if (loading) {
                             <label className="text-sm font-semibold text-slate-600">
                                 Quick Self-Description
                             </label>
-                            <textarea onChange={(e) => {setSelfDescription(e.target.value)}}
+                            <textarea
+                                onChange={e =>
+                                    setSelfDescription(e.target.value)
+                                }
                                 name="selfDescription"
                                 placeholder="Briefly describe your experience, key skills, and years of experience if you don't have a resume handy..."
                                 className="w-full h-28 bg-white border border-indigo-200 rounded-2xl px-4 py-3 text-slate-700 outline-none focus:ring-2 focus:ring-indigo-300 transition-all duration-300 resize-none placeholder:text-slate-400"
@@ -226,13 +238,148 @@ if (loading) {
                     </div>
                 </div>
 
+                {/* Recent reports */}
+                <div className="px-8 py-8 border-t border-slate-100 bg-white">
+                    <div className="flex items-center gap-2 mb-4">
+                        <svg
+                            className="w-5 h-5 text-indigo-500"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={1.5}
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            />
+                        </svg>
+                        <h2 className="text-lg font-bold text-slate-800">
+                            Recent Reports
+                        </h2>
+                    </div>
+
+                    {!reports || reports.length === 0 ? (
+                        <p className="text-slate-400 text-sm">
+                            No reports generated yet.
+                        </p>
+                    ) : (
+                        <div className="flex flex-col gap-3">
+                            {reports.map((r, i) => {
+                                const key = r._id ?? i;
+                                const isOpen = !!openReports[key];
+                                return (
+                                    <div
+                                        key={key}
+                                        className="border border-slate-200 rounded-2xl overflow-hidden hover:border-indigo-200 transition-colors duration-300"
+                                    >
+                                        <button
+                                            type="button"
+                                            onClick={() => toggleReport(key)}
+                                            className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left bg-slate-50 hover:bg-slate-100 transition-colors duration-200"
+                                        >
+                                            <div className="flex items-center gap-3 min-w-0">
+                                                <span className="w-9 h-9 rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white text-xs font-bold flex items-center justify-center shrink-0">
+                                                    {typeof r.matchScore ===
+                                                    "number"
+                                                        ? `${r.matchScore}%`
+                                                        : "—"}
+                                                </span>
+                                                <div className="min-w-0">
+                                                    <p className="text-slate-800 font-semibold text-sm truncate">
+                                                        {r.jobTitle ||
+                                                            r.title ||
+                                                            `Report ${i + 1}`}
+                                                    </p>
+                                                    <p className="text-slate-400 text-xs">
+                                                        {r.createdAt
+                                                            ? new Date(
+                                                                  r.createdAt
+                                                              ).toLocaleDateString()
+                                                            : ""}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <svg
+                                                className={`w-5 h-5 text-indigo-500 shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M19 9l-7 7-7-7"
+                                                />
+                                            </svg>
+                                        </button>
+
+                                        <div
+                                            className={`grid transition-all duration-300 ease-in-out ${
+                                                isOpen
+                                                    ? "grid-rows-[1fr] opacity-100"
+                                                    : "grid-rows-[0fr] opacity-0"
+                                            }`}
+                                        >
+                                            <div className="overflow-hidden">
+                                                <div className="flex flex-col gap-3 px-5 py-4">
+                                                    {Array.isArray(
+                                                        r.skillGap
+                                                    ) &&
+                                                        r.skillGap.length >
+                                                            0 && (
+                                                            <div className="flex flex-wrap gap-2">
+                                                                {r.skillGap
+                                                                    .slice(0, 4)
+                                                                    .map(
+                                                                        (
+                                                                            s,
+                                                                            j
+                                                                        ) => (
+                                                                            <span
+                                                                                key={
+                                                                                    j
+                                                                                }
+                                                                                className="text-[10px] font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 rounded-full px-2 py-1"
+                                                                            >
+                                                                                {
+                                                                                    s.skill
+                                                                                }
+                                                                            </span>
+                                                                        )
+                                                                    )}
+                                                            </div>
+                                                        )}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            navigate(
+                                                                `/interview/${r._id}`
+                                                            )
+                                                        }
+                                                        className="self-start text-xs font-semibold text-white bg-gradient-to-r from-indigo-500 to-blue-500 rounded-lg px-4 py-2 hover:shadow-md active:scale-95 transition-all duration-200"
+                                                    >
+                                                        View full report
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+
                 {/* Footer */}
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-8 py-5 border-t border-slate-100 bg-white">
                     <span className="text-sm text-slate-400">
                         AI-Powered Strategy Generation • Approx 30s
                     </span>
-                    <button onClick={handleGenerateReport}
-                        type="button" 
+                    <button
+                        onClick={handleGenerateReport}
+                        type="button"
                         className="group relative rounded-2xl bg-gradient-to-r from-indigo-500 to-blue-500 text-white text-base font-semibold tracking-wide px-6 py-3 hover:shadow-lg hover:shadow-indigo-500/40 active:scale-95 transition-all duration-200 flex items-center gap-2 overflow-hidden"
                     >
                         <span className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>

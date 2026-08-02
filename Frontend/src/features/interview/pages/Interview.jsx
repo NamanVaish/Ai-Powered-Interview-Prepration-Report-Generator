@@ -85,7 +85,7 @@ export default function Interview() {
     );
 
     const { report, loading } = useInterview();
-if (loading || !report) {
+    if (loading) {
         return (
             <div className="fixed inset-0 flex items-center justify-center bg-slate-100 overflow-hidden px-4">
                 <div className="absolute w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl -top-24 -left-20 animate-pulse"></div>
@@ -105,7 +105,7 @@ if (loading || !report) {
 
                     <div className="text-center">
                         <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
-                            Signing You In
+                            Generating Report.
                         </h2>
 
                         <p className="text-slate-500 text-base sm:text-lg mt-2">
@@ -119,6 +119,13 @@ if (loading || !report) {
                         <span className="w-3 h-3 rounded-full bg-blue-500 animate-bounce delay-300"></span>
                     </div>
                 </div>
+            </div>
+        );
+    }
+    if (!report) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                Report not found.
             </div>
         );
     }

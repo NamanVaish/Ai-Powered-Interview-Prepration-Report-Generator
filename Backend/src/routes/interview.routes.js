@@ -13,7 +13,7 @@ interviewRouter.post(
 );
 
 interviewRouter.get(
-    "/report:interviewId",
+    "/report/:interviewId",
     authMiddleware.authUser,
     interviewController.getInterviewReportByIdController
 );
