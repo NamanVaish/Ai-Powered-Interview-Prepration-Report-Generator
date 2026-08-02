@@ -45,6 +45,7 @@ const registerUserController = async (req, res) => {
     path: "/",
     maxAge: 24 * 60 * 60 * 1000,
 });
+    console.log(res.getHeaders()["set-cookie"]);
     res.status(201).json({
         message: "User registered successfully",
         user: {
@@ -90,6 +91,7 @@ const loginUserController = async (req, res) => {
     path: "/",
     maxAge: 24 * 60 * 60 * 1000,
 });
+    console.log(res.getHeaders()["set-cookie"]);
     console.log("NODE_ENV:", process.env.NODE_ENV);
     
     res.status(200).json({
