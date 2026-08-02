@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin: "https://ai-powered-interview-prepration-report-9upt.onrender.com",
         credentials: true
     })
 );
