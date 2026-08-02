@@ -38,13 +38,13 @@ const registerUserController = async (req, res) => {
         { expiresIn: "1d" }
     );
 
-    res.cookie("token", token, {
+   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: true,
+    sameSite: "none",
+    path: "/",
     maxAge: 24 * 60 * 60 * 1000,
 });
-
     res.status(201).json({
         message: "User registered successfully",
         user: {
@@ -85,8 +85,9 @@ const loginUserController = async (req, res) => {
 
     res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: true,
+    sameSite: "none",
+    path: "/",
     maxAge: 24 * 60 * 60 * 1000,
 });
     
