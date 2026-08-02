@@ -90,6 +90,7 @@ const loginUserController = async (req, res) => {
     path: "/",
     maxAge: 24 * 60 * 60 * 1000,
 });
+    console.log("NODE_ENV:", process.env.NODE_ENV);
     
     res.status(200).json({
         message: "User loggedIn successfully",
