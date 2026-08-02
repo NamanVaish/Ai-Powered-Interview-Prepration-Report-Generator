@@ -8,11 +8,9 @@ import { router } from "./app.routes";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
         <AuthProvider>
             <InterviewProvider>
                 <RouterProvider router={router} />
             </InterviewProvider>
         </AuthProvider>
-    </StrictMode>
 );
