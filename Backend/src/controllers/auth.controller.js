@@ -84,7 +84,6 @@ const loginUserController = async (req, res) => {
         { expiresIn: "1d" }
     );
 
-    console.log("Before cookie");
     res.cookie("token", token, {
     httpOnly: true,
     secure: true,
@@ -92,7 +91,6 @@ const loginUserController = async (req, res) => {
     path: "/",
   maxAge: 24 * 60 * 60 * 1000,
 });
-    console.log("After cookie");
     
     res.status(200).json({
         message: "User loggedIn successfully",
