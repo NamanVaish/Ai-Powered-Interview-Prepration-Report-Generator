@@ -43,6 +43,7 @@ const registerUserController = async (req, res) => {
     secure: true,
     sameSite: "none",
     path: "/",
+  maxAge: 24 * 60 * 60 * 1000,
 });
     
     res.status(201).json({
@@ -89,6 +90,7 @@ const loginUserController = async (req, res) => {
     secure: true,
     sameSite: "none",
     path: "/",
+  maxAge: 24 * 60 * 60 * 1000,
 });
     console.log("After cookie");
     
@@ -113,6 +115,7 @@ const logoutUserController = async (req, res) => {
     secure: true,
     sameSite: "none",
     path: "/",
+  maxAge: 24 * 60 * 60 * 1000,
 });
 
     res.status(200).json({
