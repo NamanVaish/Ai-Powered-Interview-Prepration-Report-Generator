@@ -26,6 +26,11 @@ const authUser = async (req, res, next) => {
             message: "Invalid token"
         });
     }
+
+    console.log("Origin:", req.headers.origin);
+console.log("Cookie Header:", req.headers.cookie);
+console.log("Parsed Cookies:", req.cookies);
+console.log("Token:", req.cookies.token);
 };
 
 module.exports = { authUser };
