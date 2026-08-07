@@ -7,7 +7,7 @@ const authUser = async (req, res, next) => {
         return res.status(401).json({
             message: "token not provided"
         });
-    }
+    };
 
     const isTokenBlacklisted = await tokenBlacklistModel.findOne({ token });
 
