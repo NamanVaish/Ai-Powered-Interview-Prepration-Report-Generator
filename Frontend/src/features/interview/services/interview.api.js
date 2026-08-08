@@ -1,20 +1,4 @@
-import axios from "axios";
-import { getAccessToken } from "../../auth/services/auth.api.js";
-
-const api = axios.create({
-    baseURL: "https://ai-powered-interview-prepration-report-oph4.onrender.com",
-    withCredentials: true
-});
-
-api.interceptors.request.use(config => {
-    const token = getAccessToken();
-
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-});
+import api from "../../auth/services/auth.api.js";
 
 export const generateInterviewReport = async ({
     jobDescription,
