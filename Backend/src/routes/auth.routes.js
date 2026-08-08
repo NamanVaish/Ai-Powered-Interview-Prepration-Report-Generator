@@ -8,7 +8,11 @@ authRouter.post("/register", authController.registerUserController);
 
 authRouter.post("/login", authController.loginUserController);
 
+authRouter.get("/refreshToken", authController.refreshToken);
+
 authRouter.get("/logout", authController.logoutUserController);
+
+authRouter.get("/logout-all", authController.logoutAllController);
 
 authRouter.get(
     "/get-me",

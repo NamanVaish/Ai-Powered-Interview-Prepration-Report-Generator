@@ -43,7 +43,7 @@ const Protected = ({ children }) => {
         );
     }
 
-    if (!user) {
+    if (!loading && !user) {
         return <Navigate to={"/login"} />;
     }
 

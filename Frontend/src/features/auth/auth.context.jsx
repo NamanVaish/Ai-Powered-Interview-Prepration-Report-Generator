@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { refreshToken, getMe, setAccessToken } from "./services/auth.api.js";
 
 export const AuthContext = createContext();
 
@@ -7,24 +8,23 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getAndSetUser = async () => {
+        const initAuth = async () => {
             try {
+                const refresh = await refreshToken();
+
+                setAccessToken(refresh.accessToken);
+
                 const data = await getMe();
 
-                if (data?.user) {
-                    setUser(data.user);
-                } else {
-                    setUser(null);
-                }
+                setUser(data.user);
             } catch (err) {
-                console.error(err);
                 setUser(null);
             } finally {
                 setLoading(false);
             }
         };
 
-        getAndSetUser();
+        initAuth();
     }, []);
 
     return (
