@@ -46,14 +46,21 @@ export const useAuth = () => {
         }
     };
 
-const getCurrentUser = async () => {
-    try {
-        const data = await getMe();
-        setUser(data.user);
-    } catch (err) {
-        setUser(null);
-    }
-};
+    const getCurrentUser = async () => {
+        try {
+            const data = await getMe();
+            setUser(data.user);
+        } catch (err) {
+            setUser(null);
+        }
+    };
 
-    return { user, loading, handleLogin, handleRegister, handleLogout, getCurrentUser };
+    return {
+        user,
+        loading,
+        handleLogin,
+        handleRegister,
+        handleLogout,
+        getCurrentUser
+    };
 };
