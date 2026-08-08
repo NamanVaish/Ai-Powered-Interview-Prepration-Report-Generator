@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const sessionModel = require("../models/session.model.js");
 
 const authUser = async (req, res, next) => {
-    try {
+    
         const token = req.cookies.token;
         if (!token) {
             return res.status(401).json({
@@ -17,9 +17,7 @@ const authUser = async (req, res, next) => {
                 message: "token is invalid"
             });
         }
-    } catch (err) {
-        console.log(err);
-    }
+        
     try {
         const authHeader = req.headers.authorization;
 
